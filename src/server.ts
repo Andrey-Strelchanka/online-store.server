@@ -7,14 +7,22 @@ process.on('uncaughtException', (err: any) => {
   process.exit(1);
 });
 
-const DB = process.env.DATABASE!.replace(
-  '<PASSWORD>',
-  process.env.PASSWORD_DB!
-);
+let DB;
 
-mongoose
-  .connect(DB)
-  .then(() => console.log('DB connection successful'));
+if (process.env.DATABASE && process.env.PASSWORD_DB) {
+  DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.PASSWORD_DB
+  );
+}
+
+if (DB) {
+  mongoose
+    .connect(DB)
+    .then(() =>
+      console.log('DB connection successful')
+    );
+}
 
 const port = process.env.PORT || 3000;
 

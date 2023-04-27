@@ -44,7 +44,6 @@ const sendErrorProd = (err: any, res: Response) => {
       message: err.message,
     });
   } else {
-    // eslint-disable-next-line no-console
     console.error('ERROR!', err);
     res.status(500).json({
       status: 'error',

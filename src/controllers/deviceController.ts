@@ -3,7 +3,7 @@ import {
   Request,
   Response,
 } from 'express';
-import { Device } from '../models/deviceModel';
+import { deviceModel } from '../models/deviceModel';
 import APIFeatures from '../utils/apiFeatures';
 import AppError from '../utils/appError';
 import { catchAsync } from '../utils/catchAsync';
@@ -15,7 +15,7 @@ export const getAllDevices = catchAsync(
     next: NextFunction
   ) => {
     const features = new APIFeatures(
-      Device.find(),
+      deviceModel.find(),
       req.query
     )
       .filter()
@@ -40,7 +40,7 @@ export const getDevice = catchAsync(
     res: Response,
     next: NextFunction
   ) => {
-    const device = await Device.findById(
+    const device = await deviceModel.findById(
       req.params.id
     );
     if (!device) {
@@ -60,66 +60,68 @@ export const getDevice = catchAsync(
   }
 );
 
-export const createDevice = catchAsync(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const newDevice = await Device.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      data: { device: newDevice },
-    });
-  }
-);
+// export const createDevice = catchAsync(
+//   async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+//   ) => {
+//     const newDevice = await deviceModel.create(
+//       req.body
+//     );
+//     res.status(201).json({
+//       status: 'success',
+//       data: { device: newDevice },
+//     });
+//   }
+// );
 
-export const updateDevice = catchAsync(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const device = await Device.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!device) {
-      return next(
-        new AppError(
-          'No device found with that ID!',
-          404
-        )
-      );
-    }
-    res.status(200).json({
-      status: 'success',
-      data: { device },
-    });
-  }
-);
+// export const updateDevice = catchAsync(
+//   async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+//   ) => {
+//     const device = await deviceModel.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
+//     if (!device) {
+//       return next(
+//         new AppError(
+//           'No device found with that ID!',
+//           404
+//         )
+//       );
+//     }
+//     res.status(200).json({
+//       status: 'success',
+//       data: { device },
+//     });
+//   }
+// );
 
-export const deleteDevice = catchAsync(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const device = await Device.findByIdAndDelete(
-      req.params.id
-    );
-    if (!device) {
-      return next(
-        new AppError(
-          'No device found with that ID!',
-          404
-        )
-      );
-    }
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  }
-);
+// export const deleteDevice = catchAsync(
+//   async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+//   ) => {
+//     const device = await deviceModel.findByIdAndDelete(
+//       req.params.id
+//     );
+//     if (!device) {
+//       return next(
+//         new AppError(
+//           'No device found with that ID!',
+//           404
+//         )
+//       );
+//     }
+//     res.status(204).json({
+//       status: 'success',
+//       data: null,
+//     });
+//   }
+// );
